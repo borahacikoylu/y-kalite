@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Enerji Karşılaştırma Raporu</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+:root {
+  --bg:      #07080a;
+  --bg2:     #0e1014;
+  --bg3:     #161820;
+  --bg4:     #1e2028;
+  --border:  rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.13);
+  --text:    #f0f2f8;
+  --text2:   #8a8fa8;
+  --text3:   #4a4f66;
+  --codex:   #f97316;
+  --codex-a: rgba(249,115,22,0.13);
+  --opus:    #a78bfa;
+  --opus-a:  rgba(167,139,250,0.13);
+  --sonnet:  #34d399;
+  --sonnet-a:rgba(52,211,153,0.13);
+  --gold:    #fbbf24;
+  --cc-accent: #22d3ee;
+  --pp-accent: #fb7185;
+  --mono: 'JetBrains Mono', monospace;
+  --disp: 'Syne', sans-serif;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--disp);
+  overflow-x:hidden;
+}
+
+body::before{
+  content:'';
+  position:fixed; inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none; z-index:0;
+}
+
+.wrap{ position:relative; z-index:1; max-width:1160px; margin:0 auto; padding:0 2rem 6rem; }
+
+/* ── HERO ── */
+.hero{
+  padding:5rem 0 3rem;
+  border-bottom:1px solid var(--border);
+  margin-bottom:0;
+}
+.eyebrow{
+  font-family:var(--mono); font-size:11px; letter-spacing:0.18em;
+  color:var(--text3); text-transform:uppercase; margin-bottom:1.25rem;
+  display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{ content:''; width:24px; height:1px; background:var(--text3); }
+h1{
+  font-size:clamp(2.6rem,6.5vw,5.5rem);
+  font-weight:800; letter-spacing:-0.04em; line-height:0.95;
+  margin-bottom:1.5rem;
+}
+h1 em{ font-style:normal; color:var(--gold); }
+.hero-sub{ font-family:var(--mono); font-size:13px; color:var(--text2); line-height:1.9; margin-bottom:2.5rem; }
+
+.hero-kpis{
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1px; background:var(--border);
+  border:1px solid var(--border); border-radius:8px; overflow:hidden;
+  margin-bottom:2.5rem;
+}
+.kpi{
+  background:var(--bg2); padding:1.4rem 1.75rem;
+  transition:background 0.15s;
+}
+.kpi:hover{ background:var(--bg3); }
+.kpi-label{ font-family:var(--mono); font-size:10px; color:var(--text3); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px; }
+.kpi-val{ font-size:1.9rem; font-weight:800; letter-spacing:-0.04em; line-height:1; }
+.kpi-val.c{ color:var(--codex); } .kpi-val.o{ color:var(--opus); } .kpi-val.s{ color:var(--sonnet); }
+.kpi-note{ font-family:var(--mono); font-size:11px; color:var(--text3); margin-top:4px; }
+
+.winner-strip{
+  display:flex; align-items:center; gap:20px;
+  background:linear-gradient(135deg,rgba(167,139,250,0.08),rgba(167,139,250,0.03));
+  border:1px solid rgba(167,139,250,0.25);
+  border-radius:6px; padding:16px 24px;
+  animation:glow 3s ease-in-out infinite;
+}
+@keyframes glow{
+  0%,100%{ box-shadow:0 0 16px rgba(167,139,250,0.08); }
+  50%{ box-shadow:0 0 36px rgba(167,139,250,0.22); }
+}
+.ws-icon{ font-size:26px; }
+.ws-body{}
+.ws-label{ font-family:var(--mono); font-size:10px; color:var(--text3); text-transform:uppercase; letter-spacing:0.14em; }
+.ws-name{ font-size:1.3rem; font-weight:700; color:var(--opus); }
+.ws-detail{ font-family:var(--mono); font-size:11px; color:var(--text2); margin-top:2px; }
+.ws-nums{ margin-left:auto; text-align:right; font-family:var(--mono); font-size:11px; color:var(--text2); line-height:1.9; }
+
+/* ── CHAPTER DIVIDER ── */
+.chapter{
+  position:relative; margin:5rem 0 0;
+  padding:2.5rem 2.5rem 0;
+  border-radius:12px 12px 0 0;
+  border:1px solid var(--border); border-bottom:none;
+}
+.chapter.cc{ background:linear-gradient(180deg,rgba(34,211,238,0.04),transparent); border-top:3px solid var(--cc-accent); }
+.chapter.pp{ background:linear-gradient(180deg,rgba(251,113,133,0.04),transparent); border-top:3px solid var(--pp-accent); }
+
+.chapter-body{
+  padding:0 2.5rem 2.5rem;
+  border:1px solid var(--border); border-top:none;
+  border-radius:0 0 12px 12px;
+  margin-bottom:0;
+}
+.chapter.cc + .chapter-body{ border-top-color:transparent; }
+
+.ch-head{
+  display:flex; align-items:center; gap:16px; margin-bottom:0.5rem;
+}
+.ch-icon{
+  width:44px; height:44px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center; font-size:20px;
+  flex-shrink:0;
+}
+.ch-icon.cc{ background:rgba(34,211,238,0.12); }
+.ch-icon.pp{ background:rgba(251,113,133,0.12); }
+.ch-title{ font-size:clamp(1.5rem,3vw,2.2rem); font-weight:800; letter-spacing:-0.03em; }
+.ch-title.cc{ color:var(--cc-accent); }
+.ch-title.pp{ color:var(--pp-accent); }
+.ch-badge{
+  margin-left:auto; font-family:var(--mono); font-size:10px;
+  padding:4px 12px; border-radius:3px; letter-spacing:0.1em; text-transform:uppercase;
+}
+.ch-badge.cc{ background:rgba(34,211,238,0.1); color:var(--cc-accent); border:1px solid rgba(34,211,238,0.25); }
+.ch-badge.pp{ background:rgba(251,113,133,0.1); color:var(--pp-accent); border:1px solid rgba(251,113,133,0.25); }
+.ch-desc{ font-family:var(--mono); font-size:12px; color:var(--text2); line-height:1.8; margin-top:0.5rem; margin-bottom:2rem; }
+
+/* ── SECTION within chapter ── */
+.sec{ margin-bottom:2.5rem; }
+.sec-title{
+  font-family:var(--mono); font-size:10px; color:var(--text3);
+  text-transform:uppercase; letter-spacing:0.12em;
+  display:flex; align-items:center; gap:10px; margin-bottom:1rem;
+}
+.sec-title::after{ content:''; flex:1; height:1px; background:var(--border); }
+
+/* ── GRIDS ── */
+.g2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+.g3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:14px; }
+.g1{ margin-bottom:14px; }
+
+/* ── CARD ── */
+.card{
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:8px; padding:1.4rem 1.5rem;
+}
+.card-title{ font-size:13px; font-weight:600; margin-bottom:3px; }
+.card-sub{ font-family:var(--mono); font-size:10px; color:var(--text3); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:1.1rem; }
+.cw{ position:relative; }
+
+/* ── ENERGY SUMMARY CARDS ── */
+.e-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:14px; }
+.e-card{
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:8px; padding:1.6rem; text-align:center; position:relative; overflow:hidden;
+  transition:transform 0.2s;
+}
+.e-card:hover{ transform:translateY(-3px); }
+.e-card::after{
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+}
+.e-card.c::after{ background:var(--codex); }
+.e-card.o::after{ background:var(--opus); }
+.e-card.s::after{ background:var(--sonnet); }
+.e-ai{ font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.75rem; }
+.e-ai.c{ color:var(--codex); } .e-ai.o{ color:var(--opus); } .e-ai.s{ color:var(--sonnet); }
+.e-big{ font-size:1.5rem; font-weight:800; letter-spacing:-0.04em; line-height:1; margin-bottom:4px; }
+.e-big.c{ color:var(--codex); } .e-big.o{ color:var(--opus); } .e-big.s{ color:var(--sonnet); }
+.e-unit{ font-family:var(--mono); font-size:10px; color:var(--text3); margin-bottom:0.75rem; }
+.e-co2{ font-family:var(--mono); font-size:11px; color:var(--text2); margin-bottom:1rem; }
+.e-track{ height:4px; background:var(--bg4); border-radius:2px; overflow:hidden; margin-bottom:0.75rem; }
+.e-fill{ height:100%; border-radius:2px; }
+.e-fill.c{ background:var(--codex); }
+.e-fill.o{ background:var(--opus); }
+.e-fill.s{ background:var(--sonnet); }
+.e-runs{ display:flex; gap:5px; justify-content:center; }
+.er{
+  width:26px; height:26px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:9px; font-weight:500;
+}
+.er.c{ background:var(--codex-a); color:var(--codex); }
+.er.o{ background:var(--opus-a);  color:var(--opus); }
+.er.s{ background:var(--sonnet-a);color:var(--sonnet); }
+
+/* ── CPU TUR DETAY ── */
+.cpu-runs{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:14px; }
+.cpu-card{
+  background:var(--bg2); border:1px solid var(--border); border-radius:8px; overflow:hidden;
+}
+.cpu-head{ padding:0.85rem 1.1rem; border-bottom:1px solid var(--border); font-size:13px; font-weight:700; }
+.cpu-head.c{ color:var(--codex); border-left:3px solid var(--codex); }
+.cpu-head.o{ color:var(--opus);  border-left:3px solid var(--opus); }
+.cpu-head.s{ color:var(--sonnet);border-left:3px solid var(--sonnet); }
+.cpu-tbl{ width:100%; border-collapse:collapse; font-family:var(--mono); font-size:11px; }
+.cpu-tbl th{ padding:7px 11px; text-align:right; color:var(--text3); font-size:9px; text-transform:uppercase; letter-spacing:0.08em; border-bottom:1px solid var(--border); background:var(--bg3); }
+.cpu-tbl th:first-child{ text-align:left; }
+.cpu-tbl td{ padding:8px 11px; text-align:right; color:var(--text2); border-bottom:1px solid var(--border); }
+.cpu-tbl td:first-child{ text-align:left; color:var(--text3); }
+.cpu-tbl tr:last-child td{ border-bottom:none; background:var(--bg3); color:var(--text); font-weight:500; }
+
+/* ── HORIZONTAL BAR ── */
+.hbars{ display:flex; flex-direction:column; gap:13px; padding:0.25rem 0; }
+.hbar{ display:flex; flex-direction:column; gap:5px; }
+.hb-top{ display:flex; justify-content:space-between; }
+.hb-name{ font-family:var(--mono); font-size:12px; }
+.hb-name.c{ color:var(--codex); } .hb-name.o{ color:var(--opus); } .hb-name.s{ color:var(--sonnet); }
+.hb-val{ font-family:var(--mono); font-size:12px; color:var(--text2); }
+.hb-track{ height:7px; background:var(--bg4); border-radius:3px; overflow:hidden; }
+.hb-fill{ height:100%; border-radius:3px; }
+.hb-fill.c{ background:linear-gradient(90deg,#f97316,#fb923c); }
+.hb-fill.o{ background:linear-gradient(90deg,#a78bfa,#c4b5fd); }
+.hb-fill.s{ background:linear-gradient(90deg,#34d399,#6ee7b7); }
+
+/* ── PUPPETEER PROFILE CARDS ── */
+.pp-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:14px; }
+.pp-card{
+  background:var(--bg2); border:1px solid var(--border); border-radius:8px;
+  padding:1.6rem; position:relative; overflow:hidden; transition:transform 0.2s;
+}
+.pp-card:hover{ transform:translateY(-3px); }
+.pp-card.c{ border-top:3px solid var(--codex); }
+.pp-card.o{ border-top:3px solid var(--opus); }
+.pp-card.s{ border-top:3px solid var(--sonnet); }
+.pp-bg{ position:absolute; top:-12px; right:-8px; font-size:70px; font-weight:800; opacity:0.04; pointer-events:none; line-height:1; }
+.pp-name{ font-size:1.15rem; font-weight:700; margin-bottom:3px; }
+.pp-name.c{ color:var(--codex); } .pp-name.o{ color:var(--opus); } .pp-name.s{ color:var(--sonnet); }
+.pp-model{ font-family:var(--mono); font-size:10px; color:var(--text3); margin-bottom:1.1rem; }
+.pp-rows{ display:flex; flex-direction:column; gap:7px; }
+.pp-row{ display:flex; justify-content:space-between; }
+.pp-k{ font-family:var(--mono); font-size:11px; color:var(--text3); }
+.pp-v{ font-family:var(--mono); font-size:11px; color:var(--text); }
+.badge-w{
+  display:inline-block; font-family:var(--mono); font-size:9px;
+  background:rgba(251,191,36,0.12); color:var(--gold);
+  border:1px solid rgba(251,191,36,0.3); padding:2px 8px; border-radius:2px;
+  letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.85rem;
+}
+
+/* ── RUN TABLE ── */
+.run-tables{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:14px; }
+.rtc{ background:var(--bg2); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+.rt-head{ padding:0.85rem 1.1rem; border-bottom:1px solid var(--border); font-size:13px; font-weight:700; }
+.rt-head.c{ color:var(--codex); border-left:3px solid var(--codex); }
+.rt-head.o{ color:var(--opus);  border-left:3px solid var(--opus); }
+.rt-head.s{ color:var(--sonnet);border-left:3px solid var(--sonnet); }
+.rt{ width:100%; border-collapse:collapse; font-family:var(--mono); font-size:11px; }
+.rt th{ padding:7px 11px; text-align:right; color:var(--text3); font-size:9px; text-transform:uppercase; letter-spacing:0.08em; border-bottom:1px solid var(--border); background:var(--bg3); }
+.rt th:first-child{ text-align:left; }
+.rt td{ padding:8px 11px; text-align:right; color:var(--text2); border-bottom:1px solid var(--border); }
+.rt td:first-child{ text-align:left; color:var(--text3); }
+.rt tr:last-child td{ border-bottom:none; background:var(--bg3); color:var(--text); font-weight:500; }
+
+/* ── FULL COMPARISON TABLE ── */
+.cmp-wrap{ overflow-x:auto; }
+.cmp{
+  width:100%; border-collapse:collapse; font-size:13px;
+}
+.cmp th{
+  font-family:var(--mono); font-size:10px; text-transform:uppercase;
+  letter-spacing:0.09em; color:var(--text3); padding:11px 15px;
+  text-align:left; border-bottom:1px solid var(--border2); background:var(--bg3);
+}
+.cmp td{
+  padding:13px 15px; border-bottom:1px solid var(--border);
+  color:var(--text2); vertical-align:middle;
+}
+.cmp tr:last-child td{ border-bottom:none; }
+.cmp tr:hover td{ background:var(--bg3); }
+.cmp td:first-child{ font-weight:600; color:var(--text); font-size:14px; }
+.tc{ font-family:var(--mono); font-weight:500; }
+.tc.c{ color:var(--codex); } .tc.o{ color:var(--opus); } .tc.s{ color:var(--sonnet); }
+.best{ display:inline-flex; align-items:center; gap:5px; }
+.dot{ width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.dot.c{ background:var(--codex); } .dot.o{ background:var(--opus); } .dot.s{ background:var(--sonnet); }
+
+/* ── INSIGHTS ── */
+.insights{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:3rem; }
+.ins-card{ background:var(--bg2); border:1px solid var(--border); border-radius:8px; padding:1.6rem; }
+.ins-icon{ font-size:26px; margin-bottom:0.85rem; }
+.ins-title{ font-size:14px; font-weight:700; margin-bottom:7px; letter-spacing:-0.02em; }
+.ins-body{ font-family:var(--mono); font-size:11.5px; color:var(--text2); line-height:1.85; }
+.ins-body strong{ color:var(--text); }
+
+/* ── FOOTER ── */
+footer{
+  margin-top:5rem; padding-top:2rem; border-top:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap;
+}
+.f-note{ font-family:var(--mono); font-size:11px; color:var(--text3); line-height:1.8; }
+.f-badge{ font-family:var(--mono); font-size:10px; color:var(--text3); background:var(--bg3); border:1px solid var(--border); padding:6px 14px; border-radius:3px; }
+
+@media(max-width:860px){
+  .hero-kpis,.g2,.g3,.e-cards,.cpu-runs,.pp-cards,.run-tables,.insights{ grid-template-columns:1fr; }
+  h1{ font-size:2.4rem; }
+  .chapter,.chapter-body{ padding-left:1.25rem; padding-right:1.25rem; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="eyebrow">AI Kod Enerji Analizi · 2025</div>
+  <h1>3 AI · 2 Test · <em>1 Kazanan</em></h1>
+  <p class="hero-sub">
+    GPT-5 Codex &nbsp;·&nbsp; Claude Opus &nbsp;·&nbsp; Claude Sonnet<br>
+    Puppeteer (tarayıcı performansı) + CodeCarbon (CPU enerji) ile 5'er tur ölçüm
+  </p>
+
+  <div class="hero-kpis">
+    <div class="kpi">
+      <div class="kpi-label">GPT-5 Codex · Ort. Enerji</div>
+      <div class="kpi-val c">2.412</div>
+      <div class="kpi-note">×10⁻⁴ kWh</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Claude Opus · Ort. Enerji 🏆</div>
+      <div class="kpi-val o">2.341</div>
+      <div class="kpi-note">×10⁻⁴ kWh · EN AZ</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Claude Sonnet · Ort. Enerji</div>
+      <div class="kpi-val s">2.418</div>
+      <div class="kpi-note">×10⁻⁴ kWh</div>
+    </div>
+  </div>
+
+  <div class="winner-strip">
+    <div class="ws-icon">🏆</div>
+    <div class="ws-body">
+      <div class="ws-label">Enerji Verimliliği Kazananı</div>
+      <div class="ws-name">Claude Opus</div>
+      <div class="ws-detail">Codex'ten %2.9 · Sonnet'ten %3.2 daha verimli</div>
+    </div>
+    <div class="ws-nums">
+      0.0002341 kWh ort.<br>
+      0.0001088 kg CO₂ ort.<br>
+      19,364 byte HTML
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     BÖLÜM A — CODECARBON
+══════════════════════════════════════════ -->
+<div class="chapter cc">
+  <div class="ch-head">
+    <div class="ch-icon cc">🔋</div>
+    <div>
+      <div class="ch-title cc">CodeCarbon Analizi</div>
+    </div>
+    <div class="ch-badge cc">Python · EmissionsTracker</div>
+  </div>
+  <div class="ch-desc">
+    Puppeteer test scripti (test.js) Python tarafından çalıştırılırken CPU'nun harcadığı gerçek elektrik enerjisi ölçülür.<br>
+    Her AI için 5 bağımsız tur · Metrikler: energy_kwh · emissions_kgCO2 · cpu_power_w · duration_sec
+  </div>
+</div>
+<div class="chapter-body">
+
+  <!-- Özet kartlar -->
+  <div class="sec-title">Ortalama Değerler — 5 Tur</div>
+  <div class="e-cards">
+    <div class="e-card c">
+      <div class="e-ai c">GPT-5 Codex</div>
+      <div class="e-big c">2.412<span style="font-size:1rem;font-weight:400"> ×10⁻⁴</span></div>
+      <div class="e-unit">kWh</div>
+      <div class="e-co2">CO₂: 0.1120 ×10⁻³ kg</div>
+      <div class="e-track"><div class="e-fill c" style="width:96.5%"></div></div>
+      <div class="e-runs">
+        <div class="er c">T1</div><div class="er c">T2</div><div class="er c">T3</div><div class="er c">T4</div><div class="er c">T5</div>
+      </div>
+    </div>
+    <div class="e-card o" style="box-shadow:0 0 28px rgba(167,139,250,0.12)">
+      <div class="e-ai o">Claude Opus 🏆</div>
+      <div class="e-big o">2.341<span style="font-size:1rem;font-weight:400"> ×10⁻⁴</span></div>
+      <div class="e-unit">kWh · EN AZ</div>
+      <div class="e-co2">CO₂: 0.1088 ×10⁻³ kg</div>
+      <div class="e-track"><div class="e-fill o" style="width:93.6%"></div></div>
+      <div class="e-runs">
+        <div class="er o">T1</div><div class="er o">T2</div><div class="er o">T3</div><div class="er o">T4</div><div class="er o">T5</div>
+      </div>
+    </div>
+    <div class="e-card s">
+      <div class="e-ai s">Claude Sonnet</div>
+      <div class="e-big s">2.418<span style="font-size:1rem;font-weight:400"> ×10⁻⁴</span></div>
+      <div class="e-unit">kWh</div>
+      <div class="e-co2">CO₂: 0.1123 ×10⁻³ kg</div>
+      <div class="e-track"><div class="e-fill s" style="width:96.8%"></div></div>
+      <div class="e-runs">
+        <div class="er s">T1</div><div class="er s">T2</div><div class="er s">T3</div><div class="er s">T4</div><div class="er s">T5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grafikler -->
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Ortalama Enerji Tüketimi (kWh)</div>
+      <div class="card-sub">5 tur ort. · daha az = daha iyi</div>
+      <div class="cw" style="height:240px"><canvas id="cEnergy"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Ortalama CO₂ Salınımı (kg)</div>
+      <div class="card-sub">Enerjiye eşdeğer karbon</div>
+      <div class="cw" style="height:240px"><canvas id="cCO2"></canvas></div>
+    </div>
+  </div>
+
+  <div class="g1 card">
+    <div class="card-title">Tur Bazlı Enerji (kWh) — 5 Bağımsız Ölçüm</div>
+    <div class="card-sub">Her nokta = 1 tam Puppeteer turu · istikrar analizi</div>
+    <div class="cw" style="height:260px"><canvas id="cEnergyLine"></canvas></div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">CPU Güç Tüketimi — Tur Bazlı (Watt)</div>
+      <div class="card-sub">Anlık CPU gücü · daha düşük = daha iyi</div>
+      <div class="cw" style="height:240px"><canvas id="cCPU"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Test Süresi — Tur Bazlı (saniye)</div>
+      <div class="card-sub">Puppeteer turu tamamlanma süresi</div>
+      <div class="cw" style="height:240px"><canvas id="cDur"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Tur detay tabloları -->
+  <div class="sec-title">Tur Bazlı Ham Veriler</div>
+  <div class="cpu-runs">
+    <div class="cpu-card">
+      <div class="cpu-head c">GPT-5 Codex</div>
+      <table class="cpu-tbl">
+        <thead><tr><th>Tur</th><th>kWh</th><th>kg CO₂</th><th>W</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>2.444×10⁻⁴</td><td>1.136×10⁻⁴</td><td>7.36</td></tr>
+          <tr><td>2</td><td>2.407×10⁻⁴</td><td>1.118×10⁻⁴</td><td>7.56</td></tr>
+          <tr><td>3</td><td>2.397×10⁻⁴</td><td>1.114×10⁻⁴</td><td>7.94</td></tr>
+          <tr><td>4</td><td>2.414×10⁻⁴</td><td>1.121×10⁻⁴</td><td>7.34</td></tr>
+          <tr><td>5</td><td>2.397×10⁻⁴</td><td>1.114×10⁻⁴</td><td>7.36</td></tr>
+          <tr><td>Ort.</td><td>2.412×10⁻⁴</td><td>1.120×10⁻⁴</td><td>7.51</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cpu-card">
+      <div class="cpu-head o">Claude Opus</div>
+      <table class="cpu-tbl">
+        <thead><tr><th>Tur</th><th>kWh</th><th>kg CO₂</th><th>W</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>2.534×10⁻⁴</td><td>1.177×10⁻⁴</td><td>9.08</td></tr>
+          <tr><td>2</td><td>2.316×10⁻⁴</td><td>1.076×10⁻⁴</td><td>7.92</td></tr>
+          <tr><td>3</td><td>2.219×10⁻⁴</td><td>1.031×10⁻⁴</td><td>7.22</td></tr>
+          <tr><td>4</td><td>2.240×10⁻⁴</td><td>1.040×10⁻⁴</td><td>7.12</td></tr>
+          <tr><td>5</td><td>2.396×10⁻⁴</td><td>1.113×10⁻⁴</td><td>6.85</td></tr>
+          <tr><td>Ort.</td><td>2.341×10⁻⁴</td><td>1.088×10⁻⁴</td><td>7.64</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cpu-card">
+      <div class="cpu-head s">Claude Sonnet</div>
+      <table class="cpu-tbl">
+        <thead><tr><th>Tur</th><th>kWh</th><th>kg CO₂</th><th>W</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>2.431×10⁻⁴</td><td>1.129×10⁻⁴</td><td>8.19</td></tr>
+          <tr><td>2</td><td>2.479×10⁻⁴</td><td>1.152×10⁻⁴</td><td>8.40</td></tr>
+          <tr><td>3</td><td>2.350×10⁻⁴</td><td>1.092×10⁻⁴</td><td>7.76</td></tr>
+          <tr><td>4</td><td>2.411×10⁻⁴</td><td>1.120×10⁻⁴</td><td>7.92</td></tr>
+          <tr><td>5</td><td>2.420×10⁻⁴</td><td>1.124×10⁻⁴</td><td>7.47</td></tr>
+          <tr><td>Ort.</td><td>2.418×10⁻⁴</td><td>1.123×10⁻⁴</td><td>7.95</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Yatay bar — enerji karşılaştırma -->
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Enerji Karşılaştırması (×10⁻⁴ kWh)</div>
+      <div class="card-sub">Normalize · Opus referans = 100%</div>
+      <div class="hbars" style="margin-top:0.5rem">
+        <div class="hbar">
+          <div class="hb-top"><span class="hb-name c">GPT-5 Codex</span><span class="hb-val">2.412</span></div>
+          <div class="hb-track"><div class="hb-fill c" style="width:103%"></div></div>
+        </div>
+        <div class="hbar">
+          <div class="hb-top"><span class="hb-name o">Claude Opus 🏆</span><span class="hb-val">2.341</span></div>
+          <div class="hb-track"><div class="hb-fill o" style="width:100%"></div></div>
+        </div>
+        <div class="hbar">
+          <div class="hb-top"><span class="hb-name s">Claude Sonnet</span><span class="hb-val">2.418</span></div>
+          <div class="hb-track"><div class="hb-fill s" style="width:103.3%"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">CO₂ Karşılaştırması (×10⁻⁴ kg)</div>
+      <div class="card-sub">Normalize · Opus referans = 100%</div>
+      <div class="hbars" style="margin-top:0.5rem">
+        <div class="hbar">
+          <div class="hb-top"><span class="hb-name c">GPT-5 Codex</span><span class="hb-val">1.120</span></div>
+          <div class="hb-track"><div class="hb-fill c" style="width:103%"></div></div>
+        </div>
+        <div class="hbar">
+          <div class="hb-top"><span class="hb-name o">Claude Opus 🏆</span><span class="hb-val">1.088</span></div>
+          <div class="hb-track"><div class="hb-fill o" style="width:100%"></div></div>
+        </div>
+        <div class="hbar">
+          <div class="hb-top"><span class="hb-name s">Claude Sonnet</span><span class="hb-val">1.123</span></div>
+          <div class="hb-track"><div class="hb-fill s" style="width:103.2%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /chapter-body CC -->
+
+
+<!-- ══════════════════════════════════════════
+     BÖLÜM B — PUPPETEER
+══════════════════════════════════════════ -->
+<div class="chapter pp" style="margin-top:3.5rem">
+  <div class="ch-head">
+    <div class="ch-icon pp">🤖</div>
+    <div>
+      <div class="ch-title pp">Puppeteer Performans Analizi</div>
+    </div>
+    <div class="ch-badge pp">Node.js · Headless Chrome</div>
+  </div>
+  <div class="ch-desc">
+    Her site.html dosyası Headless Chrome'da 5 kez açılır: yükleme süresi, scroll süresi, form doldurma süresi ölçülür.<br>
+    Ayrıca JS Heap, DOM node sayısı, HTML boyutu, layout ve style recalc sayıları kaydedilir.
+  </div>
+</div>
+<div class="chapter-body">
+
+  <!-- Model profilleri -->
+  <div class="sec-title">Model Profilleri — Üretilen Kodun Özellikleri</div>
+  <div class="pp-cards">
+    <div class="pp-card c">
+      <div class="pp-bg">C</div>
+      <div class="pp-name c">GPT-5 Codex</div>
+      <div class="pp-model">OpenAI · 5_3codex</div>
+      <div class="pp-rows">
+        <div class="pp-row"><span class="pp-k">HTML Boyutu</span><span class="pp-v">68,923 byte</span></div>
+        <div class="pp-row"><span class="pp-k">DOM Node</span><span class="pp-v">167</span></div>
+        <div class="pp-row"><span class="pp-k">Layout/tur</span><span class="pp-v">34</span></div>
+        <div class="pp-row"><span class="pp-k">Style Recalc</span><span class="pp-v">23.2</span></div>
+        <div class="pp-row"><span class="pp-k">Script (ms)</span><span class="pp-v">2.97</span></div>
+        <div class="pp-row"><span class="pp-k">Toplam Süre</span><span class="pp-v">3579 ms 🏆</span></div>
+      </div>
+    </div>
+    <div class="pp-card o">
+      <div class="pp-bg">O</div>
+      <div class="badge-w">🏆 Enerji Kazananı</div>
+      <div class="pp-name o">Claude Opus</div>
+      <div class="pp-model">Anthropic · opus</div>
+      <div class="pp-rows">
+        <div class="pp-row"><span class="pp-k">HTML Boyutu</span><span class="pp-v">19,364 byte</span></div>
+        <div class="pp-row"><span class="pp-k">DOM Node</span><span class="pp-v">58 🏆</span></div>
+        <div class="pp-row"><span class="pp-k">Layout/tur</span><span class="pp-v">39</span></div>
+        <div class="pp-row"><span class="pp-k">Style Recalc</span><span class="pp-v">140.0</span></div>
+        <div class="pp-row"><span class="pp-k">Script (ms)</span><span class="pp-v">2.65 🏆</span></div>
+        <div class="pp-row"><span class="pp-k">Toplam Süre</span><span class="pp-v">3636 ms</span></div>
+      </div>
+    </div>
+    <div class="pp-card s">
+      <div class="pp-bg">S</div>
+      <div class="pp-name s">Claude Sonnet</div>
+      <div class="pp-model">Anthropic · sonnet</div>
+      <div class="pp-rows">
+        <div class="pp-row"><span class="pp-k">HTML Boyutu</span><span class="pp-v">16,860 byte 🏆</span></div>
+        <div class="pp-row"><span class="pp-k">DOM Node</span><span class="pp-v">84</span></div>
+        <div class="pp-row"><span class="pp-k">Layout/tur</span><span class="pp-v">37 🏆</span></div>
+        <div class="pp-row"><span class="pp-k">Style Recalc</span><span class="pp-v">143.2</span></div>
+        <div class="pp-row"><span class="pp-k">Script (ms)</span><span class="pp-v">2.70</span></div>
+        <div class="pp-row"><span class="pp-k">Toplam Süre</span><span class="pp-v">3585 ms</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Süre grafikleri -->
+  <div class="sec-title">Süre Metrikleri</div>
+  <div class="g3">
+    <div class="card">
+      <div class="card-title">Yükleme Süresi (ms)</div>
+      <div class="card-sub">Sayfa açılma hızı</div>
+      <div class="cw" style="height:190px"><canvas id="pLoad"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Scroll Süresi (ms)</div>
+      <div class="card-sub">Baş-tan sona · 20 adım</div>
+      <div class="cw" style="height:190px"><canvas id="pScroll"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Form Doldurma (ms)</div>
+      <div class="card-sub">Input + checkbox + tıklama</div>
+      <div class="cw" style="height:190px"><canvas id="pForm"></canvas></div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Toplam Test Süresi (ms)</div>
+      <div class="card-sub">Yükleme + Scroll + Form · daha az = daha iyi</div>
+      <div class="cw" style="height:230px"><canvas id="pTotal"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Tur Bazlı Toplam Süre</div>
+      <div class="card-sub">5 tur · tutarlılık analizi</div>
+      <div class="cw" style="height:230px"><canvas id="pTotalLine"></canvas></div>
+    </div>
+  </div>
+
+  <!-- DOM & Bellek -->
+  <div class="sec-title">DOM, Bellek & Kod Kalitesi</div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">HTML Dosya Boyutu (byte)</div>
+      <div class="card-sub">Daha az = daha temiz kod</div>
+      <div class="hbars" style="margin-top:0.5rem">
+        <div class="hbar">
+          <div class="hb-top"><span class="hb-name c">GPT-5 Codex</span><span class="hb-val">68,923</span></div>
+          <div class="hb-track"><div class="hb-fill c" style="width:100%"></div></div>
+        </div>
+        <div class="hbar">
+          <div class="hb-top"><span class="hb-name o">Claude Opus</span><span class="hb-val">19,364</span></div>
+          <div class="hb-track"><div class="hb-fill o" style="width:28.1%"></div></div>
+        </div>
+        <div class="hbar">
+          <div class="hb-top"><span class="hb-name s">Claude Sonnet 🏆</span><span class="hb-val">16,860</span></div>
+          <div class="hb-track"><div class="hb-fill s" style="width:24.5%"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">DOM Node Sayısı</div>
+      <div class="card-sub">Daha az = daha sade yapı</div>
+      <div class="hbars" style="margin-top:0.5rem">
+        <div class="hbar">
+          <div class="hb-top"><span class="hb-name c">GPT-5 Codex</span><span class="hb-val">167</span></div>
+          <div class="hb-track"><div class="hb-fill c" style="width:100%"></div></div>
+        </div>
+        <div class="hbar">
+          <div class="hb-top"><span class="hb-name o">Claude Opus 🏆</span><span class="hb-val">58</span></div>
+          <div class="hb-track"><div class="hb-fill o" style="width:34.7%"></div></div>
+        </div>
+        <div class="hbar">
+          <div class="hb-top"><span class="hb-name s">Claude Sonnet</span><span class="hb-val">84</span></div>
+          <div class="hb-track"><div class="hb-fill s" style="width:50.3%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card">
+      <div class="card-title">JS Heap Bellek (MB)</div>
+      <div class="card-sub">Tarayıcı RAM kullanımı</div>
+      <div class="cw" style="height:190px"><canvas id="pHeap"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Layout Count</div>
+      <div class="card-sub">Reflow sayısı</div>
+      <div class="cw" style="height:190px"><canvas id="pLayout"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Style Recalc</div>
+      <div class="card-sub">CSS yeniden hesaplama</div>
+      <div class="cw" style="height:190px"><canvas id="pStyle"></canvas></div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">domContentLoaded (ms)</div>
+      <div class="card-sub">DOM hazır olma süresi</div>
+      <div class="cw" style="height:200px"><canvas id="pDCL"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Script Çalışma Süresi (ms)</div>
+      <div class="card-sub">JS execution time</div>
+      <div class="cw" style="height:200px"><canvas id="pScript"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Tur detay tabloları -->
+  <div class="sec-title">Tur Bazlı Ham Veriler</div>
+  <div class="run-tables">
+    <div class="rtc">
+      <div class="rt-head c">GPT-5 Codex</div>
+      <table class="rt">
+        <thead><tr><th>Tur</th><th>Load</th><th>Scroll</th><th>Form</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>1008</td><td>1247</td><td>999</td><td>3573</td></tr>
+          <tr><td>2</td><td>1014</td><td>1248</td><td>1004</td><td>3588</td></tr>
+          <tr><td>3</td><td>1016</td><td>1239</td><td>1005</td><td>3581</td></tr>
+          <tr><td>4</td><td>1011</td><td>1251</td><td>1003</td><td>3585</td></tr>
+          <tr><td>5</td><td>1018</td><td>1243</td><td>989</td><td>3569</td></tr>
+          <tr><td>Ort.</td><td>1013.4</td><td>1245.6</td><td>1000</td><td>3579.2</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="rtc">
+      <div class="rt-head o">Claude Opus</div>
+      <table class="rt">
+        <thead><tr><th>Tur</th><th>Load</th><th>Scroll</th><th>Form</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>1019</td><td>1242</td><td>1002</td><td>3586</td></tr>
+          <tr><td>2</td><td>1015</td><td>1245</td><td>1003</td><td>3584</td></tr>
+          <tr><td>3</td><td>1016</td><td>1248</td><td>1001</td><td>3586</td></tr>
+          <tr><td>4</td><td>1013</td><td>1247</td><td>1067</td><td>3644</td></tr>
+          <tr><td>5</td><td>1014</td><td>1245</td><td>1000</td><td>3782</td></tr>
+          <tr><td>Ort.</td><td>1015.4</td><td>1245.4</td><td>1014.6</td><td>3636.4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="rtc">
+      <div class="rt-head s">Claude Sonnet</div>
+      <table class="rt">
+        <thead><tr><th>Tur</th><th>Load</th><th>Scroll</th><th>Form</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>1010</td><td>1249</td><td>1005</td><td>3583</td></tr>
+          <tr><td>2</td><td>1015</td><td>1249</td><td>1003</td><td>3592</td></tr>
+          <tr><td>3</td><td>1017</td><td>1242</td><td>1020</td><td>3598</td></tr>
+          <tr><td>4</td><td>1021</td><td>1247</td><td>1001</td><td>3591</td></tr>
+          <tr><td>5</td><td>1008</td><td>1248</td><td>986</td><td>3563</td></tr>
+          <tr><td>Ort.</td><td>1014.2</td><td>1247.0</td><td>1003</td><td>3585.4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Radar -->
+  <div class="g2" style="margin-top:14px">
+    <div class="card">
+      <div class="card-title">Çok Boyutlu Performans Radar</div>
+      <div class="card-sub">Normalize · yüksek = daha iyi</div>
+      <div class="cw" style="height:300px"><canvas id="pRadar"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Tam Karşılaştırma Tablosu</div>
+      <div class="card-sub">Tüm Puppeteer metrikleri</div>
+      <div class="cmp-wrap">
+        <table class="cmp">
+          <thead><tr><th>Metrik</th><th>Codex</th><th>Opus</th><th>Sonnet</th><th>🏆</th></tr></thead>
+          <tbody>
+            <tr><td>Load (ms)</td><td class="tc c">1013.4</td><td class="tc o">1015.4</td><td class="tc s">1014.2</td><td><span class="best"><span class="dot c"></span>Codex</span></td></tr>
+            <tr><td>Scroll (ms)</td><td class="tc c">1245.6</td><td class="tc o">1245.4</td><td class="tc s">1247.0</td><td><span class="best"><span class="dot o"></span>Opus</span></td></tr>
+            <tr><td>Form (ms)</td><td class="tc c">1000.0</td><td class="tc o">1014.6</td><td class="tc s">1003.0</td><td><span class="best"><span class="dot c"></span>Codex</span></td></tr>
+            <tr><td>Total (ms)</td><td class="tc c">3579.2</td><td class="tc o">3636.4</td><td class="tc s">3585.4</td><td><span class="best"><span class="dot c"></span>Codex</span></td></tr>
+            <tr><td>Heap (MB)</td><td class="tc c">1.59</td><td class="tc o">1.58</td><td class="tc s">1.58</td><td><span class="best"><span class="dot o"></span>Opus/S</span></td></tr>
+            <tr><td>DOM Node</td><td class="tc c">167</td><td class="tc o">58</td><td class="tc s">84</td><td><span class="best"><span class="dot o"></span>Opus</span></td></tr>
+            <tr><td>HTML (byte)</td><td class="tc c">68923</td><td class="tc o">19364</td><td class="tc s">16860</td><td><span class="best"><span class="dot s"></span>Sonnet</span></td></tr>
+            <tr><td>Layout</td><td class="tc c">34</td><td class="tc o">39</td><td class="tc s">37</td><td><span class="best"><span class="dot c"></span>Codex</span></td></tr>
+            <tr><td>StyleRecalc</td><td class="tc c">23.2</td><td class="tc o">140</td><td class="tc s">143.2</td><td><span class="best"><span class="dot c"></span>Codex</span></td></tr>
+            <tr><td>Script (ms)</td><td class="tc c">2.97</td><td class="tc o">2.65</td><td class="tc s">2.70</td><td><span class="best"><span class="dot o"></span>Opus</span></td></tr>
+            <tr><td>DCL (ms)</td><td class="tc c">8.14</td><td class="tc o">7.52</td><td class="tc s">7.78</td><td><span class="best"><span class="dot o"></span>Opus</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /chapter-body PP -->
+
+<!-- ══════════ INSIGHTS ══════════ -->
+<div class="sec-title" style="margin-top:4rem">Genel Bulgular & Yorumlar</div>
+<div class="insights">
+  <div class="ins-card">
+    <div class="ins-icon">⚡</div>
+    <div class="ins-title">Enerji Kazananı: Opus</div>
+    <div class="ins-body">
+      <strong>Claude Opus</strong> en az enerji harcadı: <strong>2.341×10⁻⁴ kWh</strong>. Ancak fark çok küçük — Codex ve Sonnet ile aradaki yüzde fark %3'ün altında. Tek başına anlamlı değil, binlerce test tekrarında fark ortaya çıkar.
+    </div>
+  </div>
+  <div class="ins-card">
+    <div class="ins-icon">📦</div>
+    <div class="ins-title">Kod Şişkinliği: Codex</div>
+    <div class="ins-body">
+      <strong>GPT-5 Codex</strong> 68,923 byte HTML üretti — Sonnet'in <strong>4.1×</strong> katı. 167 DOM node'a karşın Opus sadece 58 node kullandı. Büyük kod doğrudan yüksek enerji demek değil ama okunabilirlik ve bakım açısından ciddi fark.
+    </div>
+  </div>
+  <div class="ins-card">
+    <div class="ins-icon">🎨</div>
+    <div class="ins-title">Style Recalc Paradoksu</div>
+    <div class="ins-body">
+      Opus 140, Sonnet 143 style recalc yaparken Codex sadece <strong>23</strong> yaptı. Bu Codex'in daha statik CSS kullandığını gösteriyor — ama enerji tüketimine neredeyse hiç yansımadı.
+    </div>
+  </div>
+  <div class="ins-card">
+    <div class="ins-icon">⏱️</div>
+    <div class="ins-title">Hız Kazananı: Codex</div>
+    <div class="ins-body">
+      Toplam Puppeteer süresi açısından <strong>Codex lider</strong>: 3579 ms. Opus 57 ms daha geride. Bu fark kullanıcı deneyiminde hissedilemez — ancak Puppeteer metriklerinde Codex form doldurma hızında öne çıkıyor.
+    </div>
+  </div>
+  <div class="ins-card">
+    <div class="ins-icon">🧠</div>
+    <div class="ins-title">Bellek: Hepsi Eşit</div>
+    <div class="ins-body">
+      3 model de <strong>1.58–1.59 MB</strong> JS heap kullandı. Vanilla JS olduğu için bellek farkı oluşmadı — bu Puppeteer'ın sabit Chrome yükünden kaynaklanıyor, HTML karmaşıklığından değil.
+    </div>
+  </div>
+  <div class="ins-card">
+    <div class="ins-icon">🏆</div>
+    <div class="ins-title">Özet: Ne'yi Önceliklendir?</div>
+    <div class="ins-body">
+      <strong>Enerji verimliliği</strong> istiyorsanız → Opus<br>
+      <strong>En küçük kod</strong> istiyorsanız → Sonnet<br>
+      <strong>En hızlı Puppeteer</strong> istiyorsanız → Codex<br>
+      "En iyi AI" cevabı hedefe göre değişir.
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="f-note">
+    Puppeteer 5 tur ort. · CodeCarbon CPU enerji ölçümü<br>
+    Sonuçlar donanıma, OS'a ve arka plan yüküne göre değişir
+  </div>
+  <div class="f-badge">AI ENERGY BENCHMARK · 2025</div>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+const C = '#f97316', O = '#a78bfa', S = '#34d399';
+const CA = 'rgba(249,115,22,0.15)', OA = 'rgba(167,139,250,0.15)', SA = 'rgba(52,211,153,0.15)';
+const TX = '#8a8fa8', BD = 'rgba(255,255,255,0.06)';
+const AI3 = ['GPT-5 Codex','Claude Opus','Claude Sonnet'];
+const RUNS = ['Tur 1','Tur 2','Tur 3','Tur 4','Tur 5'];
+
+Chart.defaults.color = TX;
+Chart.defaults.font.family = "'JetBrains Mono',monospace";
+Chart.defaults.font.size = 11;
+
+const grid = { color: BD, drawBorder:false };
+const ticks = { color: TX };
+const leg = { position:'bottom', labels:{ boxWidth:10, padding:14, color:TX, font:{size:11} } };
+
+function bar(id, data, yLabel='') {
+  return new Chart(document.getElementById(id), {
+    type:'bar',
+    data:{
+      labels: AI3,
+      datasets:[{
+        data, borderRadius:4, borderWidth:2,
+        backgroundColor:[CA,OA,SA],
+        borderColor:[C,O,S],
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{mode:'index'} },
+      scales:{ x:{grid,ticks}, y:{grid,ticks} }
+    }
+  });
+}
+
+function line(id, datasets) {
+  return new Chart(document.getElementById(id), {
+    type:'line',
+    data:{ labels:RUNS, datasets },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:leg },
+      scales:{ x:{grid,ticks}, y:{grid,ticks} },
+      elements:{ line:{tension:0.4}, point:{radius:4,hoverRadius:7} }
+    }
+  });
+}
+
+function barGroup(id, datasets) {
+  return new Chart(document.getElementById(id), {
+    type:'bar',
+    data:{ labels:AI3, datasets },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:leg },
+      scales:{ x:{grid,ticks}, y:{grid,ticks} }
+    }
+  });
+}
+
+/* ── CODECARBON CHARTS ── */
+bar('cEnergy', [0.0002411736, 0.0002340936, 0.0002418141]);
+bar('cCO2',    [0.0001120459, 0.0001087566, 0.0001123434]);
+
+line('cEnergyLine', [
+  { label:'GPT-5 Codex',  data:[0.0002444413,0.0002406747,0.0002396767,0.000241358,0.0002397175],  borderColor:C, backgroundColor:CA, fill:false },
+  { label:'Claude Opus',  data:[0.0002534017,0.0002316185,0.0002218706,0.0002239502,0.0002396269], borderColor:O, backgroundColor:OA, fill:false },
+  { label:'Claude Sonnet',data:[0.000243065,0.0002479036,0.0002349738,0.0002411446,0.0002419837],  borderColor:S, backgroundColor:SA, fill:false },
+]);
+
+line('cCPU', [
+  { label:'GPT-5 Codex',  data:[7.3554,7.5625,7.9403,7.3376,7.3601], borderColor:C, backgroundColor:CA, fill:true },
+  { label:'Claude Opus',  data:[9.0816,7.9223,7.2183,7.1237,6.8537], borderColor:O, backgroundColor:OA, fill:true },
+  { label:'Claude Sonnet',data:[8.1943,8.3956,7.7648,7.9241,7.4703], borderColor:S, backgroundColor:SA, fill:true },
+]);
+
+line('cDur', [
+  { label:'GPT-5 Codex',  data:[19.734,19.677,19.628,20.045,20.051], borderColor:C, backgroundColor:CA, fill:false },
+  { label:'Claude Opus',  data:[22.163,20.086,19.878,19.845,21.841], borderColor:O, backgroundColor:OA, fill:false },
+  { label:'Claude Sonnet',data:[20.172,19.923,19.931,19.583,19.906], borderColor:S, backgroundColor:SA, fill:false },
+]);
+
+/* ── PUPPETEER CHARTS ── */
+bar('pLoad',   [1013.4, 1015.4, 1014.2]);
+bar('pScroll', [1245.6, 1245.4, 1247.0]);
+bar('pForm',   [1000.0, 1014.6, 1003.0]);
+bar('pTotal',  [3579.2, 3636.4, 3585.4]);
+bar('pHeap',   [1.59, 1.58, 1.58]);
+bar('pLayout', [34, 39, 37]);
+bar('pStyle',  [23.2, 140.0, 143.2]);
+bar('pDCL',    [8.14, 7.52, 7.78]);
+bar('pScript', [2.97, 2.65, 2.70]);
+
+line('pTotalLine', [
+  { label:'GPT-5 Codex',  data:[3573,3588,3581,3585,3569], borderColor:C, backgroundColor:CA, fill:false },
+  { label:'Claude Opus',  data:[3586,3584,3586,3644,3782], borderColor:O, backgroundColor:OA, fill:false },
+  { label:'Claude Sonnet',data:[3583,3592,3598,3591,3563], borderColor:S, backgroundColor:SA, fill:false },
+]);
+
+/* Radar */
+new Chart(document.getElementById('pRadar'), {
+  type:'radar',
+  data:{
+    labels:['Enerji Verimliliği','Küçük HTML','Az DOM','Hızlı Load','Hızlı Script','Az Layout'],
+    datasets:[
+      { label:'GPT-5 Codex',  data:[85,10,35,100,82,100], borderColor:C, backgroundColor:CA, pointBackgroundColor:C },
+      { label:'Claude Opus',  data:[100,56,100,98,100,85], borderColor:O, backgroundColor:OA, pointBackgroundColor:O },
+      { label:'Claude Sonnet',data:[84,61,50,99,97,92],   borderColor:S, backgroundColor:SA, pointBackgroundColor:S },
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:leg },
+    scales:{
+      r:{
+        grid:{ color:BD },
+        pointLabels:{ color:TX, font:{size:11} },
+        ticks:{ color:TX, backdropColor:'transparent', stepSize:20 },
+        angleLines:{ color:BD },
+        suggestedMin:0, suggestedMax:100
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
