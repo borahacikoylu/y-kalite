@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kayıt Formu</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#f4f6f9;color:#1a1a2e;line-height:1.6}
+.container{max-width:720px;margin:0 auto;padding:40px 24px}
+h1{font-size:1.75rem;margin-bottom:28px;color:#16213e;text-align:center}
+.form-group{margin-bottom:20px}
+label{display:block;font-weight:600;margin-bottom:6px;font-size:.95rem;color:#333}
+input[type="text"],input[type="email"]{width:100%;padding:12px 14px;border:1.5px solid #c4c9d4;border-radius:8px;font-size:1rem;transition:border-color .2s,box-shadow .2s;background:#fff}
+input[type="text"]:focus,input[type="email"]:focus{outline:none;border-color:#4361ee;box-shadow:0 0 0 3px rgba(67,97,238,.15)}
+.checkbox-group{display:flex;align-items:center;gap:10px;margin:24px 0}
+.checkbox-group input[type="checkbox"]{width:18px;height:18px;accent-color:#4361ee;cursor:pointer}
+.checkbox-group label{margin:0;font-weight:400;cursor:pointer;user-select:none}
+button[type="submit"]{display:block;width:100%;padding:14px;background:#4361ee;color:#fff;border:none;border-radius:8px;font-size:1.05rem;font-weight:600;cursor:pointer;transition:background .2s,transform .1s}
+button[type="submit"]:hover{background:#3a56d4}
+button[type="submit"]:active{transform:scale(.98)}
+.agreement{margin-top:60px;padding-top:40px;border-top:2px solid #e0e3ea}
+.agreement h2{font-size:1.4rem;margin-bottom:20px;color:#16213e}
+.agreement p{margin-bottom:16px;text-align:justify;font-size:.93rem;color:#444}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Kayıt Formu</h1>
+<form id="kayitForm">
+<div class="form-group">
+<label for="ad">Ad</label>
+<input type="text" id="ad" name="ad" placeholder="Adınızı girin">
+</div>
+<div class="form-group">
+<label for="soyad">Soyad</label>
+<input type="text" id="soyad" name="soyad" placeholder="Soyadınızı girin">
+</div>
+<div class="form-group">
+<label for="eposta">E-posta</label>
+<input type="email" id="eposta" name="eposta" placeholder="E-posta adresinizi girin">
+</div>
+<div class="checkbox-group">
+<input type="checkbox" id="sozlesme">
+<label for="sozlesme">Sözleşmeyi okudum ve kabul ediyorum</label>
+</div>
+<button type="submit">Gönder</button>
+</form>
+
+<section class="agreement">
+<h2>Kullanıcı Sözleşmesi</h2>
+
+<p>Bu kullanıcı sözleşmesi, platform üzerinde sunulan tüm hizmetlerin kullanım koşullarını, tarafların hak ve yükümlülüklerini, gizlilik politikalarını ve diğer tüm yasal düzenlemeleri kapsamlı bir biçimde belirlemek amacıyla hazırlanmıştır. Platformumuza kayıt olan, hesap oluşturan veya herhangi bir şekilde hizmetlerimizden yararlanan her kullanıcı, bu sözleşmede yer alan tüm maddeleri okumuş, anlamış ve kabul etmiş sayılır. Sözleşme, kullanıcının platforma ilk erişim sağladığı andan itibaren geçerli olup, kullanıcı hesabının kapatılmasına veya sözleşmenin feshedilmesine kadar yürürlükte kalır.</p>
+
+<p>Platform, kullanıcılara çeşitli dijital hizmetler sunmakta olup bu hizmetlerin kapsamı, niteliği ve sunuluş biçimi zaman zaman değişiklik gösterebilir. Platform yönetimi, sunulan hizmetlerde herhangi bir önceden bildirimde bulunmaksızın değişiklik yapma, yeni özellikler ekleme veya mevcut özellikleri kaldırma hakkını saklı tutar. Kullanıcılar, platformun dinamik bir yapıya sahip olduğunu ve sürekli geliştirilmekte olduğunu kabul eder. Hizmetlerde yapılacak esaslı değişiklikler, kullanıcılara uygun iletişim kanalları aracılığıyla bildirilecektir; ancak her türlü küçük çaplı güncelleme ve iyileştirme için ayrı bir bildirim yapılması zorunluluğu bulunmamaktadır.</p>
+
+<p>Kullanıcı, platforma kayıt olurken verdiği tüm bilgilerin doğru, güncel ve eksiksiz olduğunu taahhüt eder. Yanlış, yanıltıcı veya eksik bilgi veren kullanıcıların hesapları, herhangi bir uyarı yapılmaksızın askıya alınabilir veya tamamen kapatılabilir. Kullanıcı, kayıt bilgilerinde meydana gelen değişiklikleri derhal güncelleme yükümlülüğü altındadır. Platform, kullanıcı tarafından sağlanan bilgilerin doğruluğunu teyit etmek amacıyla ek belgeler veya doğrulama prosedürleri talep edebilir.</p>
+
+<p>Hesap güvenliği, kullanıcının birincil sorumluluğundadır. Kullanıcı, hesap şifresini gizli tutmak, üçüncü kişilerle paylaşmamak ve hesabının yetkisiz kullanımını önlemek için gerekli tüm tedbirleri almakla yükümlüdür. Hesapta gerçekleştirilen tüm işlemlerden, bu işlemler yetkisiz kişiler tarafından yapılmış olsa dahi, kullanıcı sorumludur. Kullanıcı, hesabının yetkisiz kullanıldığını fark ettiği anda durumu derhal platform yönetimine bildirmekle yükümlüdür. Platform, bildirim üzerine hesabı geçici olarak askıya alabilir ve gerekli güvenlik incelemesini başlatabilir.</p>
+
+<p>Platformda paylaşılan, yüklenen veya oluşturulan tüm içeriklerden yalnızca ilgili kullanıcı sorumludur. Kullanıcı, paylaştığı içeriklerin yasalara uygun olduğunu, üçüncü kişilerin haklarını ihlal etmediğini ve toplum ahlakına aykırı olmadığını garanti eder. Platform, hukuka aykırı, zararlı, tehditkar, taciz edici, iftira niteliğinde, müstehcen veya başka şekilde sakıncalı bulunan içerikleri önceden bildirimde bulunmaksızın kaldırma hakkını saklı tutar. Tekrarlanan ihlaller, kullanıcı hesabının kalıcı olarak kapatılmasına yol açabilir.</p>
+
+<p>Fikri mülkiyet hakları konusunda platform, sunduğu hizmetler kapsamında kullanılan tüm yazılım kodları, tasarımlar, logolar, metinler, grafikler, ses dosyaları ve diğer materyaller üzerindeki tüm hakları saklı tutar. Bu materyallerin platform yönetiminin yazılı izni olmaksızın kopyalanması, çoğaltılması, dağıtılması, yayınlanması veya başka bir şekilde kullanılması kesinlikle yasaktır. Kullanıcı, platforma yüklediği içerikler üzerindeki fikri mülkiyet haklarını korumakla birlikte, platforma bu içerikleri hizmet sunumu amacıyla kullanma, görüntüleme ve dağıtma konusunda sınırlı, münhasır olmayan bir lisans vermektedir.</p>
+
+<p>Gizlilik ve kişisel verilerin korunması, platformumuzun en önemli önceliklerinden biridir. Kullanıcıların kişisel verileri, yürürlükteki veri koruma mevzuatına uygun olarak işlenmekte ve korunmaktadır. Platform, kullanıcı verilerini yalnızca hizmet sunumu, hizmet iyileştirme ve yasal yükümlülüklerin yerine getirilmesi amacıyla kullanır. Kişisel veriler, kullanıcının açık rızası olmaksızın üçüncü kişilerle paylaşılmaz; ancak yasal zorunluluklar, mahkeme kararları veya yetkili makamların talepleri doğrultusunda veri paylaşımı yapılabilir.</p>
+
+<p>Platform, kullanıcı deneyimini iyileştirmek amacıyla çerezler ve benzeri teknolojiler kullanabilir. Çerezler, kullanıcının tarayıcısında depolanan küçük veri dosyaları olup platformun düzgün çalışması, kullanıcı tercihlerinin hatırlanması ve istatistiksel analiz yapılması amacıyla kullanılır. Kullanıcı, tarayıcı ayarları aracılığıyla çerez kullanımını kontrol edebilir; ancak çerezlerin devre dışı bırakılması, platformun bazı özelliklerinin düzgün çalışmamasına neden olabilir.</p>
+
+<p>Platformun kullanımından kaynaklanan veya kullanımla bağlantılı olan her türlü uyuşmazlık, öncelikle taraflar arasında dostane yollarla çözülmeye çalışılacaktır. Dostane çözümün sağlanamaması halinde, uyuşmazlıklar Türkiye Cumhuriyeti kanunlarına tabi olacak ve İstanbul mahkemeleri ile icra daireleri yetkili olacaktır. Platform, sözleşmede yer almayan konularda yürürlükteki mevzuat hükümlerinin uygulanacağını kabul eder.</p>
+
+<p>Kullanıcı, platformu yalnızca yasal amaçlarla ve bu sözleşmede belirtilen koşullara uygun olarak kullanmayı taahhüt eder. Platform üzerinden gerçekleştirilen her türlü yasa dışı faaliyet, kullanıcının tam sorumluluğundadır ve platform yönetimi bu tür faaliyetlerden doğan zararlardan sorumlu tutulamaz. Platform, yasa dışı faaliyetlerin tespiti halinde ilgili kullanıcının hesabını derhal askıya alma veya kapatma ve gerekli hallerde yetkili makamlara bildirimde bulunma hakkını saklı tutar.</p>
+
+<p>Hizmet seviyesi ve erişilebilirlik açısından platform, hizmetlerini kesintisiz ve hatasız sunmak için azami çabayı gösterir; ancak teknik bakım, güncelleme, altyapı sorunları veya mücbir sebepler nedeniyle hizmetlerde geçici kesintiler yaşanabilir. Platform, planlı bakım çalışmalarını mümkün olduğunca önceden duyuracak; ancak acil durumlarda önceden bildirim yapma yükümlülüğü bulunmayacaktır. Hizmet kesintilerinden kaynaklanan doğrudan veya dolaylı zararlardan platform sorumlu tutulamaz.</p>
+
+<p>Platformdaki üçüncü taraf bağlantıları ve entegrasyonları konusunda dikkatli olunmalıdır. Platform, üçüncü taraf web sitelerine veya hizmetlerine bağlantılar içerebilir; ancak bu bağlantılar yalnızca bilgi amaçlıdır ve platform, üçüncü taraf sitelerinin içeriğinden, gizlilik uygulamalarından veya hizmet kalitesinden sorumlu değildir. Kullanıcı, üçüncü taraf sitelerine eriştiğinde kendi sorumluluğunda hareket etmekte olup bu sitelerin kendi kullanım koşulları ve gizlilik politikalarına tabi olacaktır.</p>
+
+<p>Sözleşmenin feshi ve hesap kapatma işlemleri, hem kullanıcı hem de platform tarafından gerçekleştirilebilir. Kullanıcı, hesabını istediği zaman kapatma talebinde bulunabilir. Platform ise sözleşme koşullarının ihlali, yasal zorunluluklar veya başka haklı nedenlerle kullanıcı hesabını askıya alabilir veya kapatabilir. Hesap kapatılması halinde, kullanıcının platformda depolanmış verileri, yasal saklama süreleri dışında makul bir süre içinde silinecektir.</p>
+
+<p>Platform, bu sözleşmeyi herhangi bir zamanda, tek taraflı olarak değiştirme hakkını saklı tutar. Sözleşmede yapılan değişiklikler, platformda yayınlandığı tarihten itibaren geçerli olacaktır. Kullanıcılar, sözleşme değişikliklerinden haberdar olmak için düzenli olarak bu sayfayı kontrol etmelidir. Esaslı değişiklikler, kullanıcılara e-posta veya platform içi bildirim yoluyla duyurulacaktır. Değişiklik sonrası platformu kullanmaya devam eden kullanıcılar, güncellenmiş sözleşmeyi kabul etmiş sayılır.</p>
+
+<p>Sorumluluk sınırlaması kapsamında platform, hizmetlerin kullanımından veya kullanılamamasından kaynaklanan doğrudan, dolaylı, arızi, özel veya cezai zararlardan sorumlu değildir. Bu sınırlama, sözleşme, haksız fiil veya başka herhangi bir hukuki temele dayanan talepleri de kapsar. Platformun toplam sorumluluğu, her halükarda kullanıcının son on iki ay içinde platform için ödediği tutarı aşamaz. Bu sorumluluk sınırlaması, yürürlükteki mevzuatın izin verdiği azami ölçüde uygulanır.</p>
+
+<p>Mücbir sebepler kapsamında, tarafların makul kontrolü dışında kalan ve sözleşmenin ifasını engelleyen veya geciktiren olaylar, doğal afetler, savaş, terör eylemleri, salgın hastalıklar, grevler, hükümet düzenlemeleri, internet altyapı sorunları, enerji kesintileri ve benzeri durumlar mücbir sebep olarak kabul edilir. Mücbir sebep durumunda, etkilenen tarafın sözleşmeden doğan yükümlülükleri, mücbir sebebin devam ettiği süre boyunca askıya alınır ve bu durum sözleşme ihlali olarak değerlendirilmez.</p>
+
+<p>Platform, kullanıcıların geri bildirimlerini, önerilerini ve şikayetlerini değerlendirmek için gerekli mekanizmaları sağlar. Kullanıcılar, platform üzerinden veya belirtilen iletişim kanalları aracılığıyla geri bildirimde bulunabilir. Platform, alınan geri bildirimleri hizmet kalitesinin artırılması amacıyla kullanabilir ve bu geri bildirimleri anonim bir şekilde analiz edebilir. Geri bildirim mekanizmasının kötüye kullanılması, spam veya yanıltıcı bildirimlerin gönderilmesi durumunda platform gerekli yaptırımları uygulama hakkını saklı tutar.</p>
+
+<p>Ödeme ve ücretlendirme konusunda, platformun sunduğu bazı hizmetler ücretli olabilir. Ücretli hizmetlerin bedelleri, ödeme koşulları ve iade politikaları ilgili hizmetin sayfasında açıkça belirtilir. Kullanıcı, ücretli hizmetleri satın alarak belirtilen ödeme koşullarını kabul etmiş sayılır. Platform, hizmet ücretlerinde değişiklik yapma hakkını saklı tutar; ancak mevcut abonelik dönemine ait ücretler, dönem sonuna kadar değiştirilmez. İade talepleri, platformun iade politikası çerçevesinde değerlendirilir.</p>
+
+<p>Kullanıcılar arası etkileşim ve topluluk kuralları kapsamında, platform üzerinde diğer kullanıcılarla iletişim kuran her kullanıcı, saygılı ve yapıcı bir tutum sergilemekle yükümlüdür. Hakaret, tehdit, ayrımcılık, nefret söylemi, spam, dolandırıcılık ve benzeri davranışlar kesinlikle yasaktır. Platform, topluluk kurallarını ihlal eden kullanıcılara uyarı verebilir, içeriklerini kaldırabilir veya hesaplarını askıya alabilir ya da tamamen kapatabilir. Kullanıcılar, diğer kullanıcıların ihlallerini platform yönetimine bildirerek güvenli bir topluluk ortamının korunmasına katkıda bulunabilir.</p>
+
+<p>Fikri mülkiyet ihlali bildirimleri konusunda, telif hakkı veya diğer fikri mülkiyet haklarının ihlal edildiğini düşünen hak sahipleri, platformun belirttiği iletişim kanalları aracılığıyla bildirimde bulunabilir. Bildirimde ihlal iddiasının detayları, ihlal edilen eserin tanımı ve hak sahipliğini kanıtlayan belgeler yer almalıdır. Platform, geçerli ihlal bildirimlerini derhal değerlendirecek ve ihlal tespit edilmesi halinde ilgili içeriği kaldıracaktır. Haksız ihlal bildirimlerinde bulunan kişiler, bu bildirimlerin yol açtığı zararlardan sorumlu tutulabilir.</p>
+
+<p>Veri taşınabilirliği ve dışa aktarım konusunda, kullanıcılar platformda depolanmış kişisel verilerinin bir kopyasını talep edebilir. Platform, veri taşınabilirliği taleplerini yürürlükteki mevzuatın öngördüğü süre içinde yerine getirecek ve verileri yaygın kullanılan, makine tarafından okunabilir bir formatta sunacaktır. Veri dışa aktarım talepleri, kullanıcının kimliğinin doğrulanmasının ardından işleme alınacaktır.</p>
+
+<p>Erişilebilirlik ve kapsayıcılık konusunda platform, tüm kullanıcıların hizmetlere eşit şekilde erişebilmesini sağlamak için çaba gösterir. Platform, uluslararası erişilebilirlik standartlarına uyum sağlamayı hedefler ve bu yönde sürekli iyileştirmeler yapar. Erişilebilirlik konusundaki geri bildirimler, platform tarafından öncelikli olarak değerlendirilir. Engelli kullanıcıların platformu etkin bir şekilde kullanabilmesi için gerekli teknik düzenlemeler ve alternatif erişim yolları sağlanmaya çalışılır.</p>
+
+<p>Yaş sınırlaması ve ebeveyn onayı konusunda, platformun bazı hizmetleri belirli bir yaş sınırının üzerindeki kullanıcılara yöneliktir. On sekiz yaşından küçük kullanıcıların platforma kayıt olabilmesi için ebeveyn veya yasal vasilerinin onayı gereklidir. Platform, yaş doğrulaması amacıyla ek belgeler talep edebilir. Ebeveynler veya yasal vasiler, velayetleri altındaki kişilerin platform kullanımından sorumludur ve gerektiğinde hesap üzerinde kontrol uygulayabilir.</p>
+
+<p>Bildirimler ve iletişim konusunda, platformdan kullanıcıya yönelik bildirimlerin geçerli sayılabilmesi için kullanıcının kayıt sırasında veya daha sonra belirttiği e-posta adresine gönderilmesi yeterlidir. Kullanıcı, iletişim bilgilerini güncel tutmakla yükümlüdür. Geçersiz veya güncel olmayan iletişim bilgileri nedeniyle ulaşılamayan bildirimlerin sorumluluğu kullanıcıya aittir. Platform, önemli bildirimleri ayrıca platform içi mesaj sistemi veya uygulama bildirimleri aracılığıyla da iletebilir.</p>
+
+<p>Devir ve temlik konusunda, kullanıcı bu sözleşmeden doğan hak ve yükümlülüklerini platform yönetiminin yazılı onayı olmaksızın üçüncü kişilere devredemez veya temlik edemez. Platform ise bu sözleşmeyi, sözleşmeden doğan hak ve yükümlülüklerini, herhangi bir bildirimde bulunmaksızın iştirakleri veya halef kuruluşları da dahil olmak üzere üçüncü kişilere devredebilir. Devir halinde, kullanıcının sözleşmeden doğan hakları korunmaya devam edecektir.</p>
+
+<p>Bölünebilirlik ilkesi kapsamında, bu sözleşmenin herhangi bir maddesinin veya hükmünün geçersiz, yasadışı veya uygulanamaz bulunması halinde, sözleşmenin geri kalan maddeleri ve hükümleri tam olarak geçerli ve yürürlükte kalmaya devam edecektir. Geçersiz bulunan hüküm, tarafların asıl niyetine en yakın geçerli bir hükümle değiştirilecektir. Bu durum, sözleşmenin diğer hükümlerinin geçerliliğini veya uygulanabilirliğini etkilemeyecektir.</p>
+
+<p>Feragat konusunda, platformun bu sözleşmeden doğan herhangi bir hakkını veya yetkisini kullanmaması veya kullanmada gecikmesi, söz konusu haktan veya yetkiden feragat ettiği anlamına gelmez. Herhangi bir hakkın veya yetkinin tek seferlik kullanılması, o hakkın veya yetkinin gelecekte kullanılmasına engel teşkil etmez. Feragatin geçerli olabilmesi için yazılı olması ve platform yönetimi tarafından imzalanması gerekir.</p>
+
+<p>Bütünlük maddesi kapsamında, bu sözleşme taraflar arasındaki konuyla ilgili tam ve eksiksiz anlaşmayı temsil eder ve konuyla ilgili daha önce yapılmış tüm yazılı veya sözlü anlaşmaları, taahhütleri ve beyanları geçersiz kılar. Sözleşmede yapılacak değişiklikler, platform tarafından belirlenen prosedürlere uygun olarak gerçekleştirilecektir. Sözleşmenin herhangi bir hükmüne ilişkin ek koşullar veya istisnalar, ancak platformun yazılı onayıyla geçerli olacaktır.</p>
+
+<p>Yürürlük tarihi ve geçerlilik süresi konusunda, bu sözleşme kullanıcının platforma kayıt olduğu veya platformu kullanmaya başladığı tarihte yürürlüğe girer. Sözleşme, süresiz olarak geçerlidir ve taraflardan birinin sözleşmeyi feshetmesine kadar yürürlükte kalır. Sözleşmenin sona ermesi, sona erme tarihinden önce doğmuş olan hak ve yükümlülükleri etkilemez. Niteliği gereği sözleşmenin sona ermesinden sonra da devam etmesi gereken hükümler, yürürlükte kalmaya devam edecektir.</p>
+
+<p>Güvenlik önlemleri ve veri koruma uygulamaları kapsamında platform, kullanıcı verilerinin güvenliğini sağlamak amacıyla endüstri standardı güvenlik önlemleri uygular. Bu önlemler arasında veri şifreleme, güvenlik duvarları, erişim kontrolleri, düzenli güvenlik denetimleri ve personel eğitimi yer almaktadır. Ancak hiçbir güvenlik sistemi yüzde yüz güvenli değildir ve platform, güvenlik ihlallerinden kaynaklanan zararlardan mutlak sorumluluk kabul etmez. Kullanıcılar, kendi hesap güvenliklerini sağlamak için güçlü şifreler kullanmalı, şifrelerini düzenli olarak değiştirmeli ve iki faktörlü kimlik doğrulamayı etkinleştirmelidir.</p>
+
+<p>Platform, kullanım istatistikleri ve analitik veriler toplayabilir. Bu veriler, platformun performansını izlemek, kullanıcı deneyimini iyileştirmek ve hizmet geliştirme çalışmalarına yön vermek amacıyla kullanılır. Analitik veriler, bireysel kullanıcıları tanımlamayacak şekilde anonimleştirilir ve toplu halde değerlendirilir. Platform, bu verileri araştırma ve geliştirme faaliyetlerinde, iş ortaklarıyla paylaşımda veya kamuya açık raporlarda kullanabilir; ancak bireysel kullanıcı verilerinin gizliliği her zaman korunur.</p>
+
+<p>Son olarak, bu sözleşmenin Türkçe metni esas alınacak olup farklı dillerde hazırlanmış çeviriler arasında uyumsuzluk bulunması halinde Türkçe metin geçerli olacaktır. Sözleşmeyle ilgili tüm resmi yazışmalar Türkçe olarak yapılacaktır. Platform, sözleşmenin farklı dillerdeki çevirilerini kullanıcıların bilgilendirilmesi amacıyla sunabilir; ancak bu çeviriler hukuki bağlayıcılık taşımaz ve yalnızca bilgi amaçlıdır. Taraflar, bu sözleşmeyi özgür iradeleriyle, tam bilgi sahibi olarak ve herhangi bir baskı altında kalmaksızın kabul ettiklerini beyan ve taahhüt ederler.</p>
+</section>
+</div>
+<script>
+document.getElementById("kayitForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  alert("Başarılı");
+});
+</script>
+</body>
+</html>

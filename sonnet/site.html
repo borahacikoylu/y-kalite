@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kayıt Formu</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    color: #333;
+  }
+  .container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 24px;
+    color: #1a1a2e;
+  }
+  .form-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 32px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 40px;
+  }
+  .form-group {
+    margin-bottom: 18px;
+  }
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+  }
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus {
+    border-color: #4a90e2;
+  }
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #4a90e2;
+  }
+  .checkbox-group label {
+    margin: 0;
+    font-weight: 400;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  button[type="submit"] {
+    background: #4a90e2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  button[type="submit"]:hover {
+    background: #357abd;
+  }
+  .contract-section {
+    background: #fff;
+    border-radius: 8px;
+    padding: 32px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    line-height: 1.8;
+  }
+  .contract-section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    color: #1a1a2e;
+    border-bottom: 2px solid #4a90e2;
+    padding-bottom: 10px;
+  }
+  .contract-section h3 {
+    font-size: 1.1rem;
+    margin: 24px 0 10px;
+    color: #2c3e50;
+  }
+  .contract-section p {
+    margin-bottom: 16px;
+    font-size: 0.95rem;
+    color: #444;
+    text-align: justify;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Üyelik Formu</h1>
+  <div class="form-card">
+    <form id="registerForm">
+      <div class="form-group">
+        <label for="firstName">Ad</label>
+        <input type="text" id="firstName" name="firstName" placeholder="Adınızı giriniz">
+      </div>
+      <div class="form-group">
+        <label for="lastName">Soyad</label>
+        <input type="text" id="lastName" name="lastName" placeholder="Soyadınızı giriniz">
+      </div>
+      <div class="form-group">
+        <label for="email">E-posta</label>
+        <input type="email" id="email" name="email" placeholder="E-posta adresinizi giriniz">
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="agreeCheckbox" name="agree">
+        <label for="agreeCheckbox">Sözleşmeyi okudum ve kabul ediyorum</label>
+      </div>
+      <button type="submit">Kayıt Ol</button>
+    </form>
+  </div>
+
+  <div class="contract-section" id="contract">
+    <h2>Kullanıcı Sözleşmesi</h2>
+
+    <h3>1. Taraflar</h3>
+    <p>İşbu Kullanıcı Sözleşmesi, bir tarafta bu platform üzerinden hizmet sunan şirket (bundan böyle "Hizmet Sağlayıcı" olarak anılacaktır) ile diğer tarafta platforma kayıt olan ve hizmetlerden yararlanan bireysel kullanıcı (bundan böyle "Kullanıcı" olarak anılacaktır) arasında akdedilmektedir. Sözleşme, kullanıcının kayıt işlemini tamamlamasıyla birlikte her iki taraf açısından da bağlayıcı hâle gelir.</p>
+    <p>Hizmet Sağlayıcı, sunduğu hizmetlerin kapsamını, niteliğini ve içeriğini önceden bildirimde bulunmak kaydıyla değiştirme hakkını saklı tutar. Kullanıcı, bu değişiklikleri kabul etmediği takdirde platformu kullanmaktan vazgeçme hakkına sahiptir; ancak kullanmaya devam etmesi hâlinde değişiklikleri zımnen kabul etmiş sayılacaktır.</p>
+    <p>İşbu sözleşmede yer alan hüküm ve koşullar, yürürlükteki ulusal ve uluslararası mevzuat çerçevesinde yorumlanacak ve uygulanacaktır. Taraflar arasında herhangi bir anlaşmazlık çıkması hâlinde öncelikle dostane çözüm yolları aranacak, çözüme kavuşturulamazsa yetkili mahkemelere başvurulacaktır.</p>
+
+    <h3>2. Hizmetin Tanımı ve Kapsamı</h3>
+    <p>Platform, kullanıcılara çeşitli dijital hizmetler sunmaktadır. Bu hizmetler arasında bilgi paylaşımı, içerik yönetimi, iletişim araçları ve üçüncü taraf entegrasyonları yer alabilir. Sunulan hizmetlerin bir kısmı ücretsiz olup, bir kısmı ücretli abonelik veya tek seferlik ödeme gerektirmektedir.</p>
+    <p>Hizmet Sağlayıcı, platformun kesintisiz ve hatasız çalışacağını garanti etmez. Teknik bakım, güncelleme veya beklenmedik teknik sorunlar nedeniyle hizmetlerde geçici kesintiler yaşanabilir. Hizmet Sağlayıcı bu tür kesintilerden doğabilecek zararlardan sorumlu tutulamaz.</p>
+    <p>Platformda sunulan içerikler, üçüncü taraflardan elde edilen bilgiler dahil olmak üzere, yalnızca bilgilendirme amacıyla hazırlanmıştır. Hizmet Sağlayıcı, içeriklerin doğruluğu, güncelliği veya eksiksizliği konusunda herhangi bir garanti vermemektedir. Kullanıcı, sağlanan bilgilere dayanarak aldığı kararların sorumluluğunun kendisine ait olduğunu kabul eder.</p>
+    <p>Platform zaman zaman üçüncü taraf web sitelerine veya hizmetlerine bağlantılar içerebilir. Bu bağlantılar yalnızca kullanıcıya kolaylık sağlamak amacıyla sunulmakta olup Hizmet Sağlayıcı, bahsedilen üçüncü taraf içeriklerinin doğruluğundan veya güvenilirliğinden sorumlu değildir.</p>
+
+    <h3>3. Kayıt ve Hesap Yönetimi</h3>
+    <p>Platforma kayıt olmak için kullanıcının geçerli bir e-posta adresine ve onaylı bir şifreye sahip olması gerekmektedir. Kayıt sırasında sağlanan tüm bilgilerin doğru, güncel ve eksiksiz olması kullanıcının sorumluluğundadır. Yanlış veya yanıltıcı bilgi sağlanması hâlinde Hizmet Sağlayıcı hesabı askıya alma veya kapatma hakkını saklı tutar.</p>
+    <p>Kullanıcı, hesabına erişim için belirlediği şifrenin gizliliğini korumakla yükümlüdür. Şifrenin üçüncü şahıslarla paylaşılması veya yetkisiz kişilerin eline geçmesi nedeniyle oluşabilecek tüm zararlar kullanıcıya aittir. Hesap güvenliğinin ihlal edildiğinin fark edilmesi hâlinde kullanıcı derhal Hizmet Sağlayıcıya bildirimde bulunmalıdır.</p>
+    <p>Her kullanıcı yalnızca bir hesap açabilir. Aynı kişi adına birden fazla hesap açılması halinde Hizmet Sağlayıcı fazladan hesapları kapatma ve gerekli hâllerde yasal yollara başvurma hakkını saklı tutar. Hesap başkasına devredilemez veya satılamaz.</p>
+    <p>Kullanıcı, hesabını silmek istediğinde platform üzerindeki ilgili bölümden silme talebinde bulunabilir. Hesap silme işlemi gerçekleştirildikten sonra kullanıcıya ait veriler yasal zorunluluklar saklı kalmak kaydıyla sistemden kaldırılacaktır.</p>
+
+    <h3>4. Kullanım Koşulları ve Yasaklanan Davranışlar</h3>
+    <p>Kullanıcı, platformu yalnızca yasal ve meşru amaçlarla kullanmayı kabul eder. Platformun hizmet koşullarını ihlal eden, yasalara aykırı, zararlı, tehdit edici, taciz edici, iftira niteliğinde, müstehcen veya başkasının gizliliğini ihlal eden içerikler paylaşmak kesinlikle yasaktır.</p>
+    <p>Platforma yetkisiz erişim sağlamak, sistemin güvenliğini tehdit etmek, zararlı yazılım yüklemek veya dağıtmak, veri tabanlarına izinsiz erişmeye çalışmak veya platform altyapısını bozmaya yönelik herhangi bir girişimde bulunmak yasaktır ve yasal yaptırımlara tabi tutulabilir.</p>
+    <p>Ticari amaçlarla izinsiz reklam yapmak, spam içerik göndermek, zincir mesajlar iletmek veya platform üzerinden toplu mesaj kampanyaları düzenlemek yasaktır. Kullanıcı bu tür davranışlardan kaçınmayı ve başka kullanıcılara zarar vermemeyi taahhüt eder.</p>
+    <p>Kullanıcı, üçüncü şahısların fikri mülkiyet haklarına saygı göstermeyi ve telif hakkıyla korunan içerikleri izinsiz paylaşmamayı kabul eder. Aksi hâllerde doğacak hukuki sorumluluk tamamen kullanıcıya ait olacaktır.</p>
+    <p>Kullanıcı, başka kullanıcıları taciz etmek, onları tehdit etmek, ayrımcılık yapmak veya nefret söylemi içeren içerikler üretmek ve yaymaktan kaçınmayı kabul eder. Hizmet Sağlayıcı, bu tür durumları tespit ettiğinde ilgili hesabı uyarı vermeksizin kapatabilir.</p>
+
+    <h3>5. Gizlilik ve Kişisel Verilerin Korunması</h3>
+    <p>Hizmet Sağlayıcı, kullanıcılardan topladığı kişisel verileri yürürlükteki kişisel verilerin korunmasına ilişkin mevzuat çerçevesinde işlemektedir. Kişisel veriler yalnızca hizmetin sunulması, iyileştirilmesi ve yasal yükümlülüklerin yerine getirilmesi amacıyla kullanılacaktır.</p>
+    <p>Toplanan veriler; ad, soyad, e-posta adresi, IP adresi, kullanım istatistikleri ve çerez bilgilerini kapsayabilir. Bu veriler, kullanıcının açık rızası olmadan üçüncü taraflarla paylaşılmayacaktır; ancak yasal zorunluluk hâlinde yetkili makamlara bilgi verilebilecektir.</p>
+    <p>Kullanıcı, kişisel verilerine erişim, düzeltme, silme ve veri taşınabilirliği talep etme haklarına sahiptir. Bu haklarını kullanmak isteyen kullanıcılar, destek kanalları üzerinden talepte bulunabilir. Talepler, yasal süreler içinde değerlendirilecektir.</p>
+    <p>Platform, kullanıcı deneyimini iyileştirmek amacıyla çerezler kullanmaktadır. Zorunlu çerezler hizmetin temel işlevleri için gereklidir. Analitik ve pazarlama çerezleri için kullanıcı onayı alınacaktır. Kullanıcı, çerez tercihlerini tarayıcı ayarlarından yönetebilir.</p>
+
+    <h3>6. Fikri Mülkiyet Hakları</h3>
+    <p>Platform üzerindeki tüm içerikler, tasarımlar, yazılımlar, logolar, markalar ve diğer materyaller Hizmet Sağlayıcıya veya ilgili üçüncü taraflara aittir ve telif hakkı ile diğer fikri mülkiyet yasalarıyla korunmaktadır. Kullanıcı, bu içerikleri platformun izin verdiği şekillerin dışında kullanamaz, kopyalayamaz, değiştiremez veya dağıtamaz.</p>
+    <p>Kullanıcı, platform üzerinde oluşturduğu içeriklerin fikri mülkiyet haklarını elinde tutar; ancak bu içerikleri platforma yükleyerek Hizmet Sağlayıcıya söz konusu içerikleri hizmetin işletimi ve tanıtımı amacıyla kullanma, çoğaltma ve dağıtma konusunda gayri münhasır, ücretsiz bir lisans vermiş olur.</p>
+    <p>Kullanıcı, platforma yüklediği içeriklerin üçüncü şahısların fikri mülkiyet haklarını ihlal etmediğini beyan ve taahhüt eder. Aksi durumda ortaya çıkan hukuki yükümlülük kullanıcıya aittir ve Hizmet Sağlayıcı bu konuda herhangi bir sorumluluk kabul etmez.</p>
+
+    <h3>7. Sorumluluk Sınırlaması</h3>
+    <p>Hizmet Sağlayıcı, platformun kullanımından kaynaklanan doğrudan veya dolaylı zararlardan, kâr kayıplarından, veri kayıplarından veya diğer kayıplardan sorumlu tutulamaz. Bu sorumluluk sınırlaması, Hizmet Sağlayıcının ağır ihmal veya kasıtlı eylemlerini kapsamamaktadır.</p>
+    <p>Platform "olduğu gibi" sunulmakta olup belirli bir amaca uygunluk, ticari elverişlilik veya hatasız çalışma konusunda açık ya da zımni herhangi bir garanti verilmemektedir. Kullanıcı, platformu kendi risk ve sorumluluğuyla kullandığını kabul eder.</p>
+    <p>Hizmet Sağlayıcının herhangi bir hâlde sorumluluğu, kullanıcının son oniki ay içinde platforma ödediği toplam ücretle sınırlıdır. Ücretsiz hizmetlerde ise Hizmet Sağlayıcının sorumluluğu tamamen hariç tutulmuştur.</p>
+
+    <h3>8. Sözleşmenin Feshi</h3>
+    <p>Her iki taraf da işbu sözleşmeyi diğer tarafa yazılı bildirimde bulunmak kaydıyla dilediği zaman feshedebilir. Kullanıcı, hesabını silmek suretiyle sözleşmeyi tek taraflı olarak sona erdirebilir. Hizmet Sağlayıcı ise sözleşme ihlali veya yasal zorunluluk hâllerinde sözleşmeyi derhal feshedebilir.</p>
+    <p>Sözleşmenin sona ermesinin ardından kullanıcının platforma erişimi kısıtlanacak veya tamamen engellenecektir. Fesih öncesine ait borçlar, taahhütler ve sorumluluklar fesihten etkilenmez ve taraflarca yerine getirilmeye devam edilir.</p>
+    <p>Sözleşmenin feshinden sonra dahi gizlilik, fikri mülkiyet ve sorumluluk sınırlamasına ilişkin hükümler geçerliliğini sürdürecektir. Kullanıcı bu konulardaki yükümlülüklerinin kalıcı nitelikte olduğunu kabul eder.</p>
+
+    <h3>9. Değişiklikler</h3>
+    <p>Hizmet Sağlayıcı, işbu sözleşmenin hüküm ve koşullarını zaman zaman güncelleyebilir. Önemli değişiklikler yapılması hâlinde kullanıcılara e-posta veya platform bildirimi aracılığıyla önceden haber verilecektir. Değişikliklerin yürürlüğe girmesinin ardından platformu kullanmaya devam eden kullanıcılar yeni koşulları kabul etmiş sayılacaktır.</p>
+    <p>Sözleşmenin en güncel versiyonuna her zaman platform üzerinden ulaşmak mümkündür. Kullanıcıların sözleşmeyi periyodik olarak incelemesi ve güncellemelerden haberdar olması önerilmektedir.</p>
+    <p>Taraflardan birinin bu sözleşmedeki herhangi bir hakkı kullanmaması veya icra ettirmemesi, söz konusu haktan vazgeçildiği anlamına gelmez. Sözleşmenin herhangi bir hükmünün geçersiz veya uygulanamaz bulunması hâlinde, geri kalan hükümler geçerliliğini korumaya devam eder.</p>
+
+    <h3>10. Uygulanacak Hukuk ve Uyuşmazlık Çözümü</h3>
+    <p>İşbu sözleşme, Türkiye Cumhuriyeti kanunlarına tabidir ve bu kanunlar çerçevesinde yorumlanacaktır. Sözleşmeden doğan uyuşmazlıkların çözümünde Türkiye mahkemeleri ve icra daireleri yetkili olacaktır.</p>
+    <p>Taraflar, uyuşmazlık hâlinde öncelikle müzakere ve arabuluculuk yollarına başvurmayı taahhüt eder. Bu yollarla çözüme ulaşılamaması durumunda yetkili yargı mercilerine başvurulacaktır. Yargılama dili Türkçe olacaktır.</p>
+    <p>Kullanıcı, bu sözleşmeden doğabilecek herhangi bir uyuşmazlıkta sınıf davası veya toplu dava yoluna başvurmama konusunda onay verir. Her kullanıcı uyuşmazlığını bireysel olarak çözüme kavuşturmak zorundadır.</p>
+
+    <h3>11. İletişim</h3>
+    <p>Bu sözleşmeyle ilgili herhangi bir soru, öneri veya şikâyet için aşağıdaki iletişim kanallarından Hizmet Sağlayıcıya ulaşabilirsiniz. Tüm resmi bildirimler yazılı olarak yapılmalı ve iade taahhütlü posta yoluyla veya elektronik posta yoluyla gönderilebilir.</p>
+    <p>Müşteri hizmetleri ekibi hafta içi mesai saatleri dahilinde destek taleplerinizi yanıtlamaya çalışacaktır. Teknik destek için platform içindeki yardım merkezi bölümünden de yararlanabilirsiniz. Acil durumlar için öncelikli destek hattı 7/24 hizmet vermektedir.</p>
+
+    <h3>12. Genel Hükümler</h3>
+    <p>Bu sözleşme, taraflar arasındaki konuya ilişkin tüm anlaşmaların yerine geçer ve önceki yazılı veya sözlü anlaşmaları hükümsüz kılar. Sözleşmenin herhangi bir bölümü yetkili mahkemelerce geçersiz sayılsa dahi diğer bölümleri yürürlükte kalmaya devam eder.</p>
+    <p>Hizmet Sağlayıcı, sözleşmeden doğan hak ve yükümlülüklerini kullanıcının onayına gerek kalmaksızın üçüncü bir tarafa devredebilir. Kullanıcı ise sözleşmeden doğan hak ve yükümlülüklerini Hizmet Sağlayıcının yazılı onayı olmaksızın devredemez.</p>
+    <p>İşbu sözleşme elektronik ortamda akdedilmiş olup taraflarca imzalanmış fiziksel bir belge niteliği taşımasa da yasal geçerlilik bakımından yazılı sözleşme ile eşdeğer kabul edilecektir. Elektronik onay mekanizmaları ile kurulan sözleşme geçerliliği, ilgili elektronik ticaret mevzuatı çerçevesinde değerlendirilecektir.</p>
+    <p>Kullanıcı, kayıt işlemini tamamlayarak ve platforma erişim sağlayarak bu sözleşmenin tüm hüküm ve koşullarını okuduğunu, anladığını ve kabul ettiğini beyan eder. Bu sözleşme kapsamındaki tüm bildirimler, tarafların kayıtlı iletişim bilgileri kullanılarak yapılacaktır.</p>
+    <p>Sözleşme hükümlerinden herhangi birinin ihlali hâlinde Hizmet Sağlayıcı, tazminat talep etme de dahil olmak üzere tüm yasal haklarını saklı tutar. Kullanıcı, ihlal sonucu doğacak masraf, zarar ve tazminatları karşılamakla yükümlüdür. Bu yükümlülük sözleşmenin sona ermesinden sonra da geçerliliğini koruyacaktır.</p>
+    <p>Platformun belirli özelliklerine erişim için ek şartlar veya özel kullanım koşulları uygulanabilir. Bu ek şartlar, işbu sözleşmenin ayrılmaz bir parçası olarak kabul edilir ve çelişkili hüküm bulunması hâlinde özel koşullar genel koşullara göre öncelik taşır.</p>
+    <p>Hizmet Sağlayıcı, kullanıcının platforma kayıt yaptırması sırasında sağladığı bilgilerin doğrulanması amacıyla üçüncü taraf doğrulama hizmetlerine başvurabilir. Bu doğrulama işlemleri, yürürlükteki mevzuata uygun olarak yürütülecek ve kullanıcı bilgileri ilgili koşullar çerçevesinde işlenecektir.</p>
+    <p>İşbu sözleşme yayımlandığı tarihten itibaren geçerli olup, sonraki sürümler yayımlandığı tarihten itibaren hüküm ifade eder. Hizmet Sağlayıcı, mevzuattaki değişiklikler, iş gereksinimlerindeki farklılıklar veya güvenlik kaygıları nedeniyle bu sözleşmeyi güncelleme hakkını saklı tutar. Kullanıcı, güncellemelere zamanında uyum sağlamakla yükümlüdür.</p>
+  </div>
+</div>
+
+<script>
+  document.getElementById('registerForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    alert('Başarılı');
+  });
+</script>
+</body>
+</html>
