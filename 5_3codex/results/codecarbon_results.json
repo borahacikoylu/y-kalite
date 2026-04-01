@@ -1,0 +1,43 @@
+{
+  "runs": [
+    {
+      "run": 1,
+      "duration_sec": 19.734,
+      "energy_kwh": 0.0002444413,
+      "emissions_kgCO2": 0.000113564,
+      "cpu_power_w": 7.3554
+    },
+    {
+      "run": 2,
+      "duration_sec": 19.677,
+      "energy_kwh": 0.0002406747,
+      "emissions_kgCO2": 0.0001118141,
+      "cpu_power_w": 7.5625
+    },
+    {
+      "run": 3,
+      "duration_sec": 19.628,
+      "energy_kwh": 0.0002396767,
+      "emissions_kgCO2": 0.0001113505,
+      "cpu_power_w": 7.9403
+    },
+    {
+      "run": 4,
+      "duration_sec": 20.045,
+      "energy_kwh": 0.000241358,
+      "emissions_kgCO2": 0.0001121315,
+      "cpu_power_w": 7.3376
+    },
+    {
+      "run": 5,
+      "duration_sec": 20.051,
+      "energy_kwh": 0.0002397175,
+      "emissions_kgCO2": 0.0001113694,
+      "cpu_power_w": 7.3601
+    }
+  ],
+  "avg": {
+    "energy_kwh": 0.0002411736,
+    "emissions_kgCO2": 0.0001120459
+  }
+}
